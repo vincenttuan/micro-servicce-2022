@@ -1,0 +1,34 @@
+{
+	"folders": {},
+	"connections": {
+		"mysql8-184a4bab84c-50c98c0009d16f2a": {
+			"provider": "mysql",
+			"driver": "mysql8",
+			"name": "sys",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"host": "localhost",
+				"port": "3306",
+				"database": "sys",
+				"url": "jdbc:mysql://localhost:3306/sys",
+				"configurationType": "MANUAL",
+				"home": "/usr/local/mysql-8.0.23-macos10.15-x86_64",
+				"type": "dev",
+				"auth-model": "native",
+				"handlers": {}
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "开发",
+			"color": "255,255,255",
+			"description": "常规开发数据库",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"auto-close-transactions": false
+		}
+	}
+}
