@@ -2,6 +2,7 @@ package com.example.demo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -38,11 +39,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests() // 授權請求
-			//.anyRequest().authenticated() // 所有請求都要驗證
 			// 設定放行名單
+			//.antMatchers(HttpMethod.GET, "/admin").hasAuthority("ROLE_ADMIN") // ADMIN -> ROLE_ADMIN
 			.antMatchers("/admin").hasRole("ADMIN")
 			.antMatchers("/user").hasAnyRole("USER", "ADMIN")
-			.anyRequest().permitAll()
+			//.anyRequest().permitAll() // 其他請求皆開放
+			.anyRequest().authenticated() // 所有請求都要驗證
 			.and().formLogin(); // 利用表單來登入
 		
 		http.rememberMe() // 不會因為瀏覽器關閉而消失登入狀態
@@ -50,12 +52,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.key("mykey");
 	}
 	
-
 	// 配置網路安全
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		// TODO Auto-generated method stub
-		super.configure(web);
+		// 不需要驗證的路徑
+		web.ignoring().antMatchers("/css/**", "/images/**", "/js/**");
 	}
 	
 	
