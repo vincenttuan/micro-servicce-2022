@@ -27,8 +27,10 @@ public class CloudUserDetailsService implements UserDetailsService {
 		
 		// 建立 UserDetials
 		List<GrantedAuthority> auths = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ADMIN,ROLE_USER");
-		UserDetails userDetails = new User(username, pwd, auths);
-		
+		//建構子參數: username, password, authorities
+		//UserDetails userDetails = new User(username, pwd, auths);
+		//建構子參數: username, password, enabled, accountNonExpired, credentialsNonExpired(證書), accountNonLocked, authorities
+		UserDetails userDetails = new User(username, pwd, true, true, true, false, auths);
 		return userDetails;
 	}
 
