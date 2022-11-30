@@ -4,14 +4,14 @@
 		"mysql8-184a4bab84c-50c98c0009d16f2a": {
 			"provider": "mysql",
 			"driver": "mysql8",
-			"name": "spring_cloud",
+			"name": "sys",
 			"save-password": true,
 			"read-only": false,
 			"configuration": {
 				"host": "localhost",
 				"port": "3306",
-				"database": "spring_cloud",
-				"url": "jdbc:mysql://localhost:3306/spring_cloud",
+				"database": "sys",
+				"url": "jdbc:mysql://localhost:3306/sys",
 				"configurationType": "MANUAL",
 				"home": "/usr/local/mysql-8.0.23-macos10.15-x86_64",
 				"type": "dev",
