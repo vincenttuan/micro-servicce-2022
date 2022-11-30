@@ -21,8 +21,8 @@ public class CloudUserDetailsService implements UserDetailsService {
 		String pwd  = new BCryptPasswordEncoder().encode("1234");
 		
 		if(!username.equals(name)) {
-			System.out.println("Usernme nnot found");
-			throw new UsernameNotFoundException("Usernme nnot found");
+			System.out.println("Usename not found");
+			throw new UsernameNotFoundException("Usename nnot found");
 		}
 		
 		// 建立 UserDetials
