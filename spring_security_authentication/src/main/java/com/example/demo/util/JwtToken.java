@@ -26,7 +26,7 @@ public class JwtToken {
 				.setExpiration(new Date(Instant.now().toEpochMilli() + EXPIRATION_TIME))
 				.signWith(SignatureAlgorithm.HS256, SECRET)
 				.compact();
-		
+		// 簡潔(compact)：體積非常的小，可放在 URL、POST 參數或 HTTP Header 內發送請求，體積小意味著傳輸速度快。
 	}
 	
 	// 驗證
