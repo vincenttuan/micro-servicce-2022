@@ -27,9 +27,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.inMemoryAuthentication()
 			.withUser("john")
 			.password(password)
-			.roles("admin");
+			.roles("ADMIN", "USER");
+		auth.inMemoryAuthentication()
+			.withUser("mary")
+			.password(password)
+			.roles("USER");
 	}
 	
+	// 配置 HTTP 安全性
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeHttpRequests() // 授權請求
+			//.anyRequest().authenticated() // 所有請求都要驗證
+			// 設定放行名單
+			.antMatchers("/admin").hasRole("ADMIN")
+			.antMatchers("/user").hasAnyRole("USER", "ADMIN")
+			.anyRequest().permitAll()
+			.and().formLogin(); // 利用表單來登入
+		
+		http.rememberMe() // 不會因為瀏覽器關閉而消失登入狀態
+			.tokenValiditySeconds(30)
+			.key("mykey");
+	}
+	
+
 	// 配置網路安全
 	@Override
 	public void configure(WebSecurity web) throws Exception {
@@ -37,16 +58,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		super.configure(web);
 	}
 	
-	// 配置 HTTP 安全性
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests() // 授權請求
-			.anyRequest().authenticated() // 所有請求都要驗證
-			.and().formLogin(); // 利用表單來登入
-		
-		http.rememberMe() // 不會因為瀏覽器關閉而消失登入狀態
-			.tokenValiditySeconds(30)
-			.key("mykey");
-	}
 	
 }
