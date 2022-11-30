@@ -53,6 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			//.antMatchers(HttpMethod.GET, "/admin").hasAuthority("ROLE_ADMIN") // ADMIN -> ROLE_ADMIN
 			.antMatchers("/admin").hasRole("ADMIN")
 			.antMatchers("/user").hasAnyRole("USER", "ADMIN")
+			.antMatchers("/jwt").authenticated()
 			.anyRequest().permitAll() // 其他請求皆開放
 			//.anyRequest().authenticated() // 所有請求都要驗證
 			.and().formLogin(); // 利用表單來登入
