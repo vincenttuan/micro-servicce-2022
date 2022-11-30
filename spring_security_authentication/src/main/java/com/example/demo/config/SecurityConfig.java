@@ -12,6 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
+import com.example.demo.filter.PathAndJwtCheckFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -61,6 +64,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.rememberMe() // 不會因為瀏覽器關閉而消失登入狀態
 			.tokenValiditySeconds(30)
 			.key("mykey");
+		
+		// 加入過濾器
+		http.addFilterBefore(new PathAndJwtCheckFilter(), BasicAuthenticationFilter.class);
 	}
 	
 	// 配置網路安全
