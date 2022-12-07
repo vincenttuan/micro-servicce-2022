@@ -1,7 +1,9 @@
 package com.example.demo.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -15,7 +17,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 public class AuthorizationServerConfig extends  AuthorizationServerConfigurerAdapter {
 	
 	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder; // (密碼模式也需要使用)
 	
 	/*
 	 * 配置授權服務器客戶端詳情
@@ -101,8 +103,17 @@ public class AuthorizationServerConfig extends  AuthorizationServerConfigurerAda
 	 * 	   Username: admin
 	 * 	   Password: 1234
 	 * 
+	 * 四、密碼模式
 	 * 
-	 	
+	 * POST http://localhost:8080/oauth/token
+	 * Query 參數:
+	 * 	   grant_type=password
+	 * 	   username=user
+	 * 	   password=1234
+	 * Basic Auth:
+	 * 	   Username: admin
+	 * 	   Password: 1234
+	 * 
 	*/
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -128,11 +139,16 @@ public class AuthorizationServerConfig extends  AuthorizationServerConfigurerAda
 	
 	@Autowired
 	private UserDetailsService userDetailsService; // refresh_token 用
-
+	
+	@Autowired
+	private AuthenticationManager authenticationManager; // 密碼模式用
+	
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		endpoints.userDetailsService(userDetailsService); // refresh_token 用
+		endpoints.authenticationManager(authenticationManager); // 密碼模式用密碼模式用
 	}
+	
 	
 	
 	
