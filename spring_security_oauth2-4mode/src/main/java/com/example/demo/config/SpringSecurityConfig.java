@@ -24,7 +24,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().disable() // 關閉 cors 防護
-			.authorizeHttpRequests() // 權限請求配置
+			.authorizeRequests() // 權限請求配置
 			.antMatchers("/oauth/**").permitAll() // /oauth 與其子路徑不需認證直接可以訪問
 			.anyRequest().authenticated() // 其他路徑都要認證
 			.and()
