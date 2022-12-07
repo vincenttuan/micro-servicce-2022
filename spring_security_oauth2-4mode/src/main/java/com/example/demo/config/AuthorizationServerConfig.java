@@ -86,7 +86,12 @@ public class AuthorizationServerConfig extends  AuthorizationServerConfigurerAda
 	 *     client_secret=1234
 	 * Basic Auth:
 	 *     Username: admin
-	 *     Password: 1234   
+	 *     Password: 1234  
+	 * 
+	 * 二、簡單授權模式:
+	 * http://localhost:8080/oauth/authorize?response_type=token&client_id=admin&scope=all
+	 * 得到
+	 * http://localhost:8080/callback#access_token=1d00df0a-3177-45fb-aee4-b27644dee5e5&token_type=bearer&expires_in=5999   
 	*/
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -96,7 +101,8 @@ public class AuthorizationServerConfig extends  AuthorizationServerConfigurerAda
 			.redirectUris("http://localhost:8080/callback") //  客戶端重定向
 			.scopes("all")
 			.authorities("all")
-			.authorizedGrantTypes("authorization_code", "refresh_token")  // 授權流程類型: 標準授權模式 + 刷新令牌模式
+			//.authorizedGrantTypes("authorization_code", "refresh_token")  // 授權流程類型: 標準授權模式 + 刷新令牌模式
+			.authorizedGrantTypes("implicit")  // 授權流程類型: 簡單授權模式
 			.autoApprove(true) // 是否自動授權
 			.accessTokenValiditySeconds(6000) // token 有效時間
 			.refreshTokenValiditySeconds(7000); // 刷新 token 有效時間
