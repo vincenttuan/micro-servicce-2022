@@ -27,16 +27,22 @@ public class AuthorizationServerConfig extends  AuthorizationServerConfigurerAda
 		 * implicit :隱式授權模式(簡化模式)
 		 * password :密碼模式
 		 * client_credentials :客戶端模式
-	 * refresh_token :刷新令牌模式(只有在授權模式或者密碼模式才會生效)
+	 * refresh_token :刷新令牌模式(只有在標準授權模式或者密碼模式才會生效)
 	 * accessTokenValiditySeconds :token有效時間（單位毫秒）
 	 * refreshTokenValiditySeconds :刷新token有效期(單位毫秒)
 	*/
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		// TODO Auto-generated method stub
-		super.configure(clients);
+		clients.inMemory()
+			.withClient("admin") // client_id
+			.secret(passwordEncoder.encode("1234")) // client_secure
+			.redirectUris("http://localhost:8080/callback") //  客戶端重定向
+			.scopes("all")
+			.authorities("all")
+			.authorizedGrantTypes("authorization_code", "refresh_token")  // 授權流程類型: 標準授權模式 + 刷新令牌模式
+			.autoApprove(false) // 是否自動授權
+			.accessTokenValiditySeconds(6000) // token 有效時間
+			.refreshTokenValiditySeconds(7000); // 刷新 token 有效時間
 	}
-	
-	
 	
 }
