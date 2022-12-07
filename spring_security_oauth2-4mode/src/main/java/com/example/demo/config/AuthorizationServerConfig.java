@@ -2,10 +2,12 @@ package com.example.demo.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 
 @Configuration
@@ -73,6 +75,18 @@ public class AuthorizationServerConfig extends  AuthorizationServerConfigurerAda
 	 *     Username: admin
 	 *     Password: 1234    
 	 * 
+	 * 更新 Token
+	 * 要使用 refresh_token 的話，授權服務器 AuthorizationServer 需要额外配置 userDetailsService
+	 * 
+	 * POST http://localhost:8080/oauth/token
+	 * Query params:
+	 *     grant_type=refresh_token
+	 *     refresh_token=02d1d317-b471-4b70-bc5b-efa1aa25b5be
+	 *     client_id=admin
+	 *     client_secret=1234
+	 * Basic Auth:
+	 *     Username: admin
+	 *     Password: 1234   
 	*/
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -92,6 +106,14 @@ public class AuthorizationServerConfig extends  AuthorizationServerConfigurerAda
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 		security.checkTokenAccess("isAuthenticated()");
+	}
+	
+	@Autowired
+	private UserDetailsService userDetailsService; // refresh_token 用
+
+	@Override
+	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+		endpoints.userDetailsService(userDetailsService); // refresh_token 用
 	}
 	
 	
