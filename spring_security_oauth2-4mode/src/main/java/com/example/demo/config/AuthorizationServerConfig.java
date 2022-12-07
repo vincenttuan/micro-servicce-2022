@@ -31,19 +31,19 @@ public class AuthorizationServerConfig extends  AuthorizationServerConfigurerAda
 	 * accessTokenValiditySeconds :token有效時間（單位毫秒）
 	 * refreshTokenValiditySeconds :刷新token有效期(單位毫秒)
 	 * 
-	 * 標準授權模式: 申請授權碼 URL
+	 * 一、標準授權模式: 申請授權碼 URL
 	 * 1. 得到 code
 	 * GET http://localhost:8080/oauth/authorize?response_type=code&client_id=admin&scope=all
 	 * 輸入使用者的帳密 user/1234
 	 * 若 autoApprove(false)
 	 * 	選擇 Approve 並按下 Authorize
-	 * 得到 code -> http://localhost:8080/callback?code=m0CbGK
+	 * 得到 code -> http://localhost:8080/callback?code=tKoS43tKoS43
 	 * 
 	 * 2. 透過 code 取得 token
 	 * POST http://localhost:8080/oauth/token
 	 * Query params
 	 *     grant_type=authorization_code
-	 *     code=m0CbGK
+	 *     code=tKoS43
 	 *     client_id=admin
 	 *     redirect_uri=http://localhost:8080/callback
 	 *     scope=all
@@ -51,6 +51,14 @@ public class AuthorizationServerConfig extends  AuthorizationServerConfigurerAda
 	 * 	   Username: admin
 	 *     Password: 1234
 	 * 
+	 * 得到
+	 * {
+	 *     "access_token": "7462841f-eec7-40be-ab87-4a98e6a89af8",
+	 *     "token_type": "bearer",
+	 *     "refresh_token": "d4be2217-5c2a-4c50-b4a6-47babea5e141",
+	 *     "expires_in": 5999,
+	 *     "scope": "all"
+	 * }
 	*/
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
