@@ -66,6 +66,12 @@ public class AuthorizationServerConfig extends  AuthorizationServerConfigurerAda
 	 * 所以必須在 conf/AuthorizationServerconfig.java
 	 * 加入啟動校驗("isAuthenticated()")服務
 	 * 
+	 * GET/POST http://localhost:8080/oauth/check_token
+	 * Query params:
+	 *     token=7462841f-eec7-40be-ab87-4a98e6a89af8
+	 * Basic Auth:
+	 *     Username: admin
+	 *     Password: 1234    
 	 * 
 	*/
 	@Override
