@@ -125,7 +125,8 @@ public class AuthorizationServerConfig extends  AuthorizationServerConfigurerAda
 			.authorities("all")
 			//.authorizedGrantTypes("authorization_code", "refresh_token")  // 授權流程類型: 標準授權模式 + 刷新令牌模式
 			//.authorizedGrantTypes("implicit")  // 授權流程類型: 簡單授權模式
-			.authorizedGrantTypes("client_credentials")  // 授權流程類型: 客戶端模式
+			//.authorizedGrantTypes("client_credentials")  // 授權流程類型: 客戶端模式
+			.authorizedGrantTypes("password", "refresh_token")  // 授權流程類型: 密碼模式 + 刷新令牌模式
 			.autoApprove(true) // 是否自動授權
 			.accessTokenValiditySeconds(6000) // token 有效時間
 			.refreshTokenValiditySeconds(7000); // 刷新 token 有效時間
