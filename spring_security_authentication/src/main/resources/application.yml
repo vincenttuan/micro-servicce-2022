@@ -5,7 +5,6 @@ server:
     encoding:
       charset: UTF-8
 
-
 spring:
   thymeleaf:
     cache: false
