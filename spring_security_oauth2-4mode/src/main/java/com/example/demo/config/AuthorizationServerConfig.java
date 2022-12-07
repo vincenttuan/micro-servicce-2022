@@ -33,7 +33,10 @@ public class AuthorizationServerConfig extends  AuthorizationServerConfigurerAda
 	 * 
 	 * 標準授權模式: 申請授權碼 URL
 	 * http://localhost:8080/oauth/authorize?response_type=code&client_id=admin&scope=all
-	 * 
+	 * 輸入使用者的帳密 user/1234
+	 * 若 autoApprove(false)
+	 * 	選擇 Approve 並按下 Authorize
+	 * 得到 code -> http://localhost:8080/callback?code=m0CbGK
 	*/
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -44,7 +47,7 @@ public class AuthorizationServerConfig extends  AuthorizationServerConfigurerAda
 			.scopes("all")
 			.authorities("all")
 			.authorizedGrantTypes("authorization_code", "refresh_token")  // 授權流程類型: 標準授權模式 + 刷新令牌模式
-			.autoApprove(false) // 是否自動授權
+			.autoApprove(true) // 是否自動授權
 			.accessTokenValiditySeconds(6000) // token 有效時間
 			.refreshTokenValiditySeconds(7000); // 刷新 token 有效時間
 	}
