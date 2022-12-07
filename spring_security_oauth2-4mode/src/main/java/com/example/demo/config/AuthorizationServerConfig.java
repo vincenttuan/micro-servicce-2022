@@ -30,6 +30,10 @@ public class AuthorizationServerConfig extends  AuthorizationServerConfigurerAda
 	 * refresh_token :刷新令牌模式(只有在標準授權模式或者密碼模式才會生效)
 	 * accessTokenValiditySeconds :token有效時間（單位毫秒）
 	 * refreshTokenValiditySeconds :刷新token有效期(單位毫秒)
+	 * 
+	 * 標準授權模式: 申請授權碼 URL
+	 * http://localhost:8080/oauth/authorize?response_type=code&client_id=admin&scope=all
+	 * 
 	*/
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
