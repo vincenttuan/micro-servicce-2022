@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 
 @Configuration
 @EnableAuthorizationServer // 啟動授權伺服器
@@ -59,6 +60,13 @@ public class AuthorizationServerConfig extends  AuthorizationServerConfigurerAda
 	 *     "expires_in": 5999,
 	 *     "scope": "all"
 	 * }
+	 * 
+	 * 校驗 Token (/oauth/check_token)
+	 * 因為授權服務器 AuthorizationServer 預設是 "denyAll()" 拒絕校驗
+	 * 所以必須在 conf/AuthorizationServerconfig.java
+	 * 加入啟動校驗("isAuthenticated()")服務
+	 * 
+	 * 
 	*/
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -73,5 +81,13 @@ public class AuthorizationServerConfig extends  AuthorizationServerConfigurerAda
 			.accessTokenValiditySeconds(6000) // token 有效時間
 			.refreshTokenValiditySeconds(7000); // 刷新 token 有效時間
 	}
+	
+	// 啟動 token 校驗
+	@Override
+	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+		security.checkTokenAccess("isAuthenticated()");
+	}
+	
+	
 	
 }
