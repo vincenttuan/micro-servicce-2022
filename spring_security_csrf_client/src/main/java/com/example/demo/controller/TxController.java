@@ -16,8 +16,8 @@ public class TxController {
 		return "Hello " + name;
 	}
 	
-	@RequestMapping("/tx")
-	public String tx(Authentication authentication, HttpServletRequest request) {
+	@RequestMapping("/tx2")
+	public String tx2(Authentication authentication) {
 		String name = authentication.getName();
 		System.out.println(name + "交易了 100 元");
 		return name + "交易了 100 元";

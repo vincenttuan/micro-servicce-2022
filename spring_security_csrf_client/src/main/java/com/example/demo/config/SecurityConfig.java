@@ -36,11 +36,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		System.out.println("configure(HttpSecurity http)");
-			http.authorizeHttpRequests() // 授權請求
-			.anyRequest().authenticated() // 所有請求都要驗證
+			http.authorizeRequests() // 授權請求
+			.anyRequest().authenticated() 
 			.and()
-			//.csrf().disable() // 關閉 csrf 防護
-			.formLogin(); // 利用表單來登入
+			//.csrf().disable()
+			.formLogin();
 	}
 	
 	
