@@ -1,6 +1,6 @@
 # micro-servicce-2022
 
-# SpringBatch
+# SpringBatch<pre>
 MySQL 資料庫建立：
 CREATE DATABASE springbatch DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci
 
@@ -17,3 +17,5 @@ spring:
   sql:
     init:
       schema-locations: classpath:/org/springframework/batch/core/schema-mysql.sql
+
+</pre>
