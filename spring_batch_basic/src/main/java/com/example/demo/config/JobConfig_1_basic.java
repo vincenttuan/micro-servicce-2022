@@ -36,12 +36,32 @@ public class JobConfig_1_basic {
 	}
 	
 	@Bean
+	public Job helloJob2() {
+		return jobBuilderFactory.get("HelloJob2")
+				.start(step2())
+				.next(step1())
+				.build();
+	}
+	
+	@Bean
 	public Step step1() {
 		return stepBuilderFactory.get("Step1")
 				.tasklet((contribution, chunkContext) -> {
 					System.out.println("Hello batch step1");
 					return RepeatStatus.FINISHED;
 				})
+				.allowStartIfComplete(true)
+				.build();
+	}
+	
+	@Bean
+	public Step step2() {
+		return stepBuilderFactory.get("Step2")
+				.tasklet((contribution, chunkContext) -> {
+					System.out.println("Hello batch step2");
+					return RepeatStatus.FINISHED;
+				})
+				.allowStartIfComplete(true)
 				.build();
 	}
 	
