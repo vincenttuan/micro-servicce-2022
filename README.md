@@ -2,10 +2,10 @@
 
 # SpringBatch
 <pre>
-MySQL 資料庫建立：
+<b>MySQL 資料庫建立：</b>
 CREATE DATABASE springbatch DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci
 
-application.yml
+<b>application.yml：</b>
 spring:
   datasource:
     username: root
