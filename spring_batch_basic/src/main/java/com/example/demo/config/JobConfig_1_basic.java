@@ -35,6 +35,7 @@ public class JobConfig_1_basic {
 				.build();
 	}
 	
+	@Bean
 	public Step step1() {
 		return stepBuilderFactory.get("Step1")
 				.tasklet((contribution, chunkContext) -> {
