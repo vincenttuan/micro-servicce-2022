@@ -3,6 +3,7 @@ package com.example.demo.config;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
@@ -33,9 +34,16 @@ public class Chunk_1_ItemReader {
 	private StepBuilderFactory stepBuilderFactory;
 	
 	@Bean
+	public Job itemReaderJob() {
+		return jobBuilderFactory.get("ItemReaderJob")
+				.start(itemReaderStep())
+				.build();
+	}
+	
+	@Bean
 	public Step itemReaderStep() {
 		return stepBuilderFactory.get("ItemReaderStep")
-				.<String, String>chunk(2) // <讀取的資料型別, 寫入的資料型別>
+				.<String, String>chunk(2) // 2 表示每次讀 2 筆資料。<讀取的資料型別, 寫入的資料型別>
 				.reader(extractedReader())
 				//.writer((items) -> System.out.println(items))
 				.writer(System.out::println)
