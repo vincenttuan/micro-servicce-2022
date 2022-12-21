@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
 // 參數格式: key = value
 // 參數是誰可以得到 Step
 // 如何得到: 實作 StepExecutionListener
-@Configuration
+//@Configuration
 public class JobConfig_6_params implements StepExecutionListener {
 	@Autowired
 	private JobBuilderFactory jobBuilderFactory;
