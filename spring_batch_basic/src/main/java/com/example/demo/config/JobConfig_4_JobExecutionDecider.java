@@ -65,11 +65,12 @@ public class JobConfig_4_JobExecutionDecider {
 	class ScoreDecider implements JobExecutionDecider {
 		@Override
 		public FlowExecutionStatus decide(JobExecution jobExecution, StepExecution stepExecution) {
-			int score = new Random().nextInt(101);
+			final int score = new Random().nextInt(101);
+			System.out.println("成績: " + score);
 			if(score >= 60) {
-				return  new FlowExecutionStatus("pass: " + score);
+				return new FlowExecutionStatus("pass");
 			} else {
-				return  new FlowExecutionStatus("fail: " + score);
+				return new FlowExecutionStatus("fail");
 			}
 		}
 	}
