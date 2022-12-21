@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
 // on("COMPLETED")、on("FAILED")
 // 另外可以透過決策器 JobExecutionDecider 來進行較為複雜的決策
 // docs: https://docs.spring.io/spring-batch/docs/current/reference/html/step.html#programmaticFlowDecisions
-@Configuration
+//@Configuration
 public class JobConfig_4_JobExecutionDecider {
 	
 	@Autowired
