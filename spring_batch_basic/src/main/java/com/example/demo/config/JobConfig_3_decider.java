@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 // on("COMPLETED")、on("FAILED")
 // 另外可以透過決策器 JobExecutionDecider 來進行較為複雜的決策
 // docs: https://docs.spring.io/spring-batch/docs/current/reference/html/step.html#programmaticFlowDecisions
-@Configuration
+//@Configuration
 public class JobConfig_3_decider {
 	
 	@Autowired
@@ -69,7 +69,7 @@ public class JobConfig_3_decider {
 		return jobBuilderFactory.get("DeciderJobDemo")
 				.start(step1()).on("COMPLETED").to(step2())
 				.from(step2()).on("FAILED").to(step3())
-				.from(step3()).end()
+				.end()
 				.build();
 	}
 	
