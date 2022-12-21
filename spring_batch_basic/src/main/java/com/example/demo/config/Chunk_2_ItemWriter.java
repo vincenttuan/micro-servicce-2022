@@ -34,15 +34,15 @@ public class Chunk_2_ItemWriter {
 	private StepBuilderFactory stepBuilderFactory;
 	
 	@Bean
-	public Job itemReaderJob() {
-		return jobBuilderFactory.get("ItemReaderJob")
-				.start(itemReaderStep())
+	public Job itemWriterJob() {
+		return jobBuilderFactory.get("ItemWriterJob")
+				.start(itemWriterStep())
 				.build();
 	}
 	
 	@Bean
-	public Step itemReaderStep() {
-		return stepBuilderFactory.get("ItemReaderStep")
+	public Step itemWriterStep() {
+		return stepBuilderFactory.get("ItemWriterStep")
 				.<String, String>chunk(2) // 2 表示每次讀 2 筆資料。<讀取的資料型別, 寫入的資料型別>
 				.reader(extractedReader())
 				.writer(extractedWriter())
