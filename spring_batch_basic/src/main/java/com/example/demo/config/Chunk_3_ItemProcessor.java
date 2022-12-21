@@ -10,8 +10,10 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.support.CompositeItemProcessor;
 import org.springframework.batch.item.support.ListItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,6 +30,14 @@ public class Chunk_3_ItemProcessor {
 	@Autowired
 	private StepBuilderFactory stepBuilderFactory;
 	
+	@Autowired
+	@Qualifier("myProcessorLowCase")
+	private ItemProcessor<String, String> myProcessorLowCase;
+	
+	@Autowired
+	@Qualifier("myProcessorSize")
+	private ItemProcessor<String, String> myProcessorSize;
+	
 	@Bean
 	public Job itemProcessorJob() {
 		return jobBuilderFactory.get("ItemProcessorJob")
@@ -40,11 +50,26 @@ public class Chunk_3_ItemProcessor {
 		return stepBuilderFactory.get("ItemProcessorStep")
 				.<String, String>chunk(2)
 				.reader(extractedReader())
-				.processor(extractedProcessor())
+				//.processor(extractedProcessor()) // 單一處理
+				//.processor(myProcessorLowCase) // 單一處理 (以最後一個單一處理為主)
+				.processor(multiProcessor()) // 多組處理
 				.writer(extractedWriter())
 				.build();
 	}
-
+	
+	// 多組處理
+	public CompositeItemProcessor<String, String> multiProcessor() {
+		CompositeItemProcessor<String, String> processor = new CompositeItemProcessor<>();
+		List<ItemProcessor<String, String>> delegates = 
+				Arrays.asList(myProcessorLowCase, myProcessorSize, myProcessorReverse());
+		processor.setDelegates(null);
+		return processor;
+	}
+	
+	private ItemProcessor<String, String> myProcessorReverse() {
+		return  (item) -> new StringBuffer(item).reverse().toString();
+	}
+	
 	private ItemProcessor<String, String> extractedProcessor() {
 		return new ItemProcessor<String, String>() {
 			@Override
@@ -55,7 +80,7 @@ public class Chunk_3_ItemProcessor {
 	}
 	
 	private ItemReader<String> extractedReader() {
-		List<String> items = Arrays.asList("A", "BB", "CCC", "DDDD", "EEEEE");
+		List<String> items = Arrays.asList("A", "AB", "ABC", "ABCD", "ABCDE");
 		return new ListItemReader<>(items);
 	}
 	
