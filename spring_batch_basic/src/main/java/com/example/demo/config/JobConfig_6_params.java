@@ -3,6 +3,7 @@ package com.example.demo.config;
 import java.util.Map;
 
 import org.springframework.batch.core.ExitStatus;
+import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepExecution;
@@ -39,6 +40,13 @@ public class JobConfig_6_params implements StepExecutionListener {
 					return RepeatStatus.FINISHED;
 				})
 				.allowStartIfComplete(true)
+				.build();
+	}
+	
+	@Bean
+	public Job paramJob() {
+		return jobBuilderFactory.get("ParamJob")
+				.start(paramStep())
 				.build();
 	}
 	
