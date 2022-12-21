@@ -49,7 +49,7 @@ public class Chunk_3_ItemProcessor {
 		return new ItemProcessor<String, String>() {
 			@Override
 			public String process(String item) throws Exception {
-				return item.toLowerCase();
+				return item.length() >= 3 ? item.toLowerCase() : null;
 			}
 		};
 	}
