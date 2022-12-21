@@ -15,7 +15,7 @@ import org.springframework.core.task.SimpleAsyncTaskExecutor;
 // split 拆分任務來實現多執行緒併發執行
 // 在任務 Job 中可以讓多個 Step、Flow 併發執行
 @Configuration
-public class JonConfig_5_split {
+public class JobConfig_5_split {
 	
 	@Autowired
 	private JobBuilderFactory jobBuilderFactory;
