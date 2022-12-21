@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
  * Ex: chunk(100) 表示讀完 100 筆資料之後才去做後續的處理，
  *     最後一筆若不足 100，例如只剩下 20 筆 ，就以20筆進行處理
  * */
-@Configuration
+//@Configuration
 public class Chunk_2_ItemWriter {
 	
 	@Autowired
