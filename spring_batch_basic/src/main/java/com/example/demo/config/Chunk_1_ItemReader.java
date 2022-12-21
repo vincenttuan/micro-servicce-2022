@@ -49,7 +49,7 @@ public class Chunk_1_ItemReader {
 				.writer(System.out::println)
 				.allowStartIfComplete(true)
 				.build();
-		}
+	}
 
 	private ItemReader<String> extractedReader() {
 		List<String> items = Arrays.asList("A", "BB", "CCC", "DDDD", "EEEEE");
