@@ -61,7 +61,7 @@ public class Chunk_3_ItemProcessor {
 	public CompositeItemProcessor<String, String> multiProcessor() {
 		CompositeItemProcessor<String, String> processor = new CompositeItemProcessor<>();
 		List<ItemProcessor<String, String>> delegates = 
-				Arrays.asList(myProcessorLowCase, myProcessorSize, myProcessorReverse());
+				Arrays.asList(myProcessorSize, myProcessorLowCase, myProcessorReverse());
 		processor.setDelegates(delegates);
 		return processor;
 	}
