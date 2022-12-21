@@ -24,8 +24,8 @@ import org.springframework.context.annotation.Configuration;
  * Ex: chunk(100) 表示讀完 100 筆資料之後才去做後續的處理，
  *     最後一筆若不足 100，例如只剩下 20 筆 ，就以20筆進行處理
  * */
-//@Configuration
-public class Chunk_1_ItemReader {
+@Configuration
+public class Chunk_2_ItemWriter {
 	
 	@Autowired
 	private JobBuilderFactory jobBuilderFactory;
@@ -45,11 +45,23 @@ public class Chunk_1_ItemReader {
 		return stepBuilderFactory.get("ItemReaderStep")
 				.<String, String>chunk(2) // 2 表示每次讀 2 筆資料。<讀取的資料型別, 寫入的資料型別>
 				.reader(extractedReader())
-				//.writer((items) -> System.out.println(items))
-				.writer(System.out::println)
+				.writer(extractedWriter())
 				.allowStartIfComplete(true)
 				.build();
 		}
+
+	private ItemWriter<String> extractedWriter() {
+		return new ItemWriter<String>() {
+
+			@Override
+			public void write(List<? extends String> items) throws Exception {
+				System.out.println(items.size());
+				for(String item : items) {
+					System.out.println(item);
+				}
+			}
+		};
+	}
 
 	private ItemReader<String> extractedReader() {
 		List<String> items = Arrays.asList("A", "BB", "CCC", "DDDD", "EEEEE");
