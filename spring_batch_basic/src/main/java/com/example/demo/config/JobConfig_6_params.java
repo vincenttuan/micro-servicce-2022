@@ -33,6 +33,7 @@ public class JobConfig_6_params implements StepExecutionListener {
 	@Bean
 	public Step paramStep() {
 		return stepBuilderFactory.get("ParamStep")
+				.listener(this) // 加入監聽
 				.tasklet((contribution, chunkContext) -> {
 					// 輸出接收到的參數內容
 					System.out.println(params);
@@ -52,6 +53,9 @@ public class JobConfig_6_params implements StepExecutionListener {
 	
 	@Override
 	public void beforeStep(StepExecution stepExecution) {
+		System.out.println("beforeStep");
+		// Run As > Run Configurations > Args 裡面設定 info=HelloBatch > 按下 Run
+		// 因為 param 在資料表中是放在 String_VAL 欄位是 unique, 所以每一次執行需要帶入不同參數
 		params = stepExecution.getJobParameters().getParameters();
 	}
 
