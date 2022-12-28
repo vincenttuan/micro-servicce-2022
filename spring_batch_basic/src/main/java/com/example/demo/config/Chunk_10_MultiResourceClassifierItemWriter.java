@@ -4,7 +4,10 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.item.ItemStreamWriter;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
+import org.springframework.batch.item.file.FlatFileItemWriter;
+import org.springframework.batch.item.support.ClassifierCompositeItemWriter;
 import org.springframework.batch.item.support.CompositeItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,8 +19,8 @@ import org.springframework.context.annotation.Configuration;
  * 透過 CompositeItemWriter 寫入到多組文件
  * 透過 ClassifierCompositeItemWriter 分類並寫入到多組文件
  * */
-//@Configuration
-public class Chunk_9_MultiResourceItemWriter {
+@Configuration
+public class Chunk_10_MultiResourceClassifierItemWriter {
 	@Autowired
 	private JobBuilderFactory jobBuilderFactory;
 	
@@ -29,8 +32,20 @@ public class Chunk_9_MultiResourceItemWriter {
 	private JdbcPagingItemReader<Customer> jdbcCustomerReader;
 	
 	@Autowired
-	@Qualifier("writeToMultiFiles")
-	private CompositeItemWriter<Customer> writeToMultiFiles;
+	@Qualifier("writeToClassifierMultiFiles")
+	private ClassifierCompositeItemWriter<Customer> writeToClassifierMultiFiles;
+	
+	@Autowired
+	@Qualifier("flatFileCustomerWriter")
+	public ItemStreamWriter<Customer> flatFileCustomerWriter;
+	
+	@Autowired
+	@Qualifier("jsonFileCustomerWriter")
+	public ItemStreamWriter<Customer> jsonFileCustomerWriter;
+	
+	@Autowired
+	@Qualifier("xmlFileCustomerWriter")
+	public ItemStreamWriter<Customer> xmlFileCustomerWriter;
 	
 	@Bean
 	public Job writeToMultiFilesJob() {
@@ -44,7 +59,10 @@ public class Chunk_9_MultiResourceItemWriter {
 		return stepBuilderFactory.get("WriteToMultiFilesStep")
 				.<Customer, Customer>chunk(3)
 				.reader(jdbcCustomerReader)
-				.writer(writeToMultiFiles)
+				.writer(writeToClassifierMultiFiles)
+				.stream(flatFileCustomerWriter)
+				.stream(jsonFileCustomerWriter)
+				.stream(xmlFileCustomerWriter)
 				.allowStartIfComplete(true)
 				.build();
 	}
