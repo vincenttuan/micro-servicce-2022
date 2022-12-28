@@ -6,6 +6,7 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.item.file.FlatFileItemWriter;
+import org.springframework.batch.item.xml.StaxEventItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -30,7 +31,7 @@ public class Chunk_8_ReadFromDB_WriteToXMLFile {
 	
 	@Autowired
 	@Qualifier("xmlFileCustomerWriter")
-	private FlatFileItemWriter<Customer> xmlFileCustomerWriter;
+	private StaxEventItemWriter<Customer> xmlFileCustomerWriter;
 	
 	@Bean
 	public Job writeToXMLFileJob() {
