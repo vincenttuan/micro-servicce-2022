@@ -1,3 +1,4 @@
+-- config/Chunk_4_ItemReadFromDB.java 讀取數據用
 CREATE TABLE user(
     id int NOT NULL AUTO_INCREMENT, -- 主鍵(序號)
     username varchar(50) not null UNIQUE, -- (姓名)
