@@ -1,5 +1,8 @@
 package com.example.demo.config;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
@@ -9,10 +12,12 @@ import org.springframework.batch.item.file.transform.DelimitedLineAggregator;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.batch.item.file.transform.FieldSet;
 import org.springframework.batch.item.file.transform.LineAggregator;
+import org.springframework.batch.item.xml.StaxEventItemWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.oxm.xstream.XStreamMarshaller;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 
@@ -102,4 +107,25 @@ public class MyFiles {
 		return writer;
 	}
 		
+	// 寫入 xml 檔
+	@Bean
+	public StaxEventItemWriter<Customer> xmlFileCustomerWriter() throws Exception {
+		StaxEventItemWriter<Customer> writer = new StaxEventItemWriter<>();
+		String filePath = "/Users/vincenttuan/mico-servicce-2022/spring_batch_basic/src/main/resources/output/customers.xml";
+		writer.setResource(new FileSystemResource(filePath));
+		
+		// 將 Customer 物件轉對應到 XML 格式
+		XStreamMarshaller marshaller = new XStreamMarshaller();  // xml 編組器
+		Map<String, Class> aliases = new HashMap<>();
+		aliases.put("customer", Customer.class);
+		marshaller.setAliases(aliases); // 配置別名
+		
+		// 將資料寫入到 writer
+		writer.setRootTagName("customers");
+		writer.setMarshaller(marshaller);
+		
+		writer.afterPropertiesSet();
+		return writer;
+	}
+	
 }
