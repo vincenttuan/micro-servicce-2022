@@ -22,6 +22,7 @@ public class MyJdbc {
 	@Autowired
 	private DataSource dataSource;
 	
+	// 批次讀取 user 資料表中的紀錄
 	@Bean
 	@StepScope
 	private JdbcPagingItemReader<User> jdbcUserReader() {
@@ -43,7 +44,9 @@ public class MyJdbc {
 		return reader;
 	}
 	
+	// 批次寫入到 customer 資料表中
 	@Bean
+	@StepScope
 	public JdbcBatchItemWriter<Customer> jdbcCustomerWriter() {
 		JdbcBatchItemWriter<Customer> writer =  new JdbcBatchItemWriter<>();
 		writer.setDataSource(dataSource);
