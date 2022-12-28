@@ -30,7 +30,7 @@ public class MyJdbc {
 		reader.setRowMapper(new BeanPropertyRowMapper<>(User.class));
 		// 指定 MySQL 配置
 		MySqlPagingQueryProvider provider = new MySqlPagingQueryProvider();
-		provider.setSelectClause("id, name, password, age");
+		provider.setSelectClause("id, username, password, age");
 		provider.setFromClause("from user");
 		// 排序
 		Map<String, Order> sort = new HashMap<>();
