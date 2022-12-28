@@ -8,12 +8,15 @@ import org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor;
 import org.springframework.batch.item.file.transform.DelimitedLineAggregator;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.batch.item.file.transform.FieldSet;
+import org.springframework.batch.item.file.transform.LineAggregator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 // 讀取檔案資料
 @Configuration // 確保系統再啟動時就會先行配置
@@ -70,4 +73,33 @@ public class MyFiles {
 		writer.afterPropertiesSet();
 		return writer;
 	}
+	
+	// 寫入 json 檔
+	@Bean
+	public FlatFileItemWriter<Customer> jsonFileCustomerWriter() throws Exception {
+		FlatFileItemWriter<Customer> writer = new FlatFileItemWriter<>();
+		String filePath = "/Users/vincenttuan/mico-servicce-2022/spring_batch_basic/src/main/resources/output/customers.json";
+		writer.setResource(new FileSystemResource(filePath));
+		writer.setAppendAllowed(true);
+		// 將 Customer 物件轉為文字列
+		// Json file
+		writer.setLineAggregator(new LineAggregator<Customer>() {
+			ObjectMapper mapper = new ObjectMapper();
+			@Override
+			public String aggregate(Customer item) {
+				String str = null;
+				try {
+					// 將 item 物件（Customer）轉字串（預設是轉為 Json 格式）
+					str = mapper.writeValueAsString(item);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return str;
+			}
+		});
+		
+		writer.afterPropertiesSet();
+		return writer;
+	}
+		
 }
