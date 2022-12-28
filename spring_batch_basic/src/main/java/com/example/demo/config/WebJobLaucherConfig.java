@@ -39,7 +39,7 @@ public class WebJobLaucherConfig implements StepExecutionListener {
 	@Bean
 	public Step jobLaunchStep() {
 		return stepBuilderFactory.get("jobLaunchStep")
-				.listener(this) // 監聽參數
+				.listener(this) // 監聽參數, 要加入監聽，否則得不到參數 param
 				.tasklet((contribution, chunkcontext) -> {
 					System.out.println("Run Step jobLaunchStep");
 					System.out.println("Run Step param = " + param);
