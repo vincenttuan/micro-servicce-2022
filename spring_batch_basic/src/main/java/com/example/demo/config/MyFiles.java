@@ -34,7 +34,7 @@ public class MyFiles {
 				return customer;
 			}
 		});
-		mapper.afterPropertiesSet(); // 將 bean 的屬性內容配置好後調用
+		mapper.afterPropertiesSet(); // 將 bean 的屬性內容配置好(透過 Assert 來檢查)後調用
 		reader.setLineMapper(mapper);
 		return reader;
 	} 
