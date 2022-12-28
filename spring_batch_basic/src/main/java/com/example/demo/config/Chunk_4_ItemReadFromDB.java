@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 // JdbcPagingItemReader 分頁讀取
-@Configuration
+//@Configuration
 public class Chunk_4_ItemReadFromDB {
 	
 	@Autowired
