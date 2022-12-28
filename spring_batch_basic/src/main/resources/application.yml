@@ -7,6 +7,8 @@ spring:
   batch:
     jdbc:
       initialize-schema: always
+    job:
+      enabled: false  
   sql:
     init:
       schema-locations: classpath:/org/springframework/batch/core/schema-mysql.sql
