@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Configuration;
  * ItemProcessor 若返回 null 表示不繼續處理該項目
  * 可以透過實現 CompositeItemProcessor 來進行多組的邏輯校驗
  * */
-@Configuration
+//@Configuration
 public class Chunk_3_ItemProcessor {
 	@Autowired
 	private JobBuilderFactory jobBuilderFactory;
