@@ -1,10 +1,14 @@
 package com.example.demo.config;
 
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /*
@@ -26,4 +30,25 @@ public class Chunk_5_ItemWriterToDB {
 	@Qualifier("fileCustomerReader")
 	private FlatFileItemReader<Customer> fileCustomerReader;
 	
+	@Autowired
+	@Qualifier("jdbcCustomerWriter")
+	private JdbcBatchItemWriter<Customer> jdbcCustomerWriter;
+	
+	@Bean
+	public Job itemWriterDBJob() {
+		return jobBuilderFactory.get("ItemWriterDBJob")
+				.start(itemWriterDBStep())
+				.build();
+		
+	}
+	
+	@Bean
+	public Step itemWriterDBStep() {
+		return stepBuilderFactory.get("ItemWriterDBStep")
+				.<Customer, Customer>chunk(2)
+				.reader(fileCustomerReader)
+				.writer(jdbcCustomerWriter)
+				//.allowStartIfComplete(true)
+				.build();
+	}
 }
