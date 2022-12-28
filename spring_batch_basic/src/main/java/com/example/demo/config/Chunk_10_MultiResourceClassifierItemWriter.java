@@ -48,15 +48,15 @@ public class Chunk_10_MultiResourceClassifierItemWriter {
 	public ItemStreamWriter<Customer> xmlFileCustomerWriter;
 	
 	@Bean
-	public Job writeToMultiFilesJob() {
-		return jobBuilderFactory.get("WriteToMultiFilesJob")
-				.start(writeToMultiFilesStep())
+	public Job writeToClassifierMultiFilesJob() {
+		return jobBuilderFactory.get("WriteToClassifierMultiFilesJob")
+				.start(writeToClassifierMultiFilesStep())
 				.build();
 	}
 	
 	@Bean
-	public Step writeToMultiFilesStep() {
-		return stepBuilderFactory.get("WriteToMultiFilesStep")
+	public Step writeToClassifierMultiFilesStep() {
+		return stepBuilderFactory.get("WriteToClassifierMultiFilesStep")
 				.<Customer, Customer>chunk(3)
 				.reader(jdbcCustomerReader)
 				.writer(writeToClassifierMultiFiles)
