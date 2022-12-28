@@ -11,7 +11,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>spring_batch_basic</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<name>spring_batch_basic</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>

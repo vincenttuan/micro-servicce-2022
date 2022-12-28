@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<customers>
+	<customer>
+		<id>2</id>
+		<cname>C02</cname>
+		<birthday>2002-02-02</birthday>
+	</customer>
+	<customer>
+		<id>5</id>
+		<cname>C05</cname>
+		<birthday>2005-05-05</birthday>
+	</customer>
+	<customer>
+		<id>8</id>
+		<cname>B03</cname>
+		<birthday>2008-03-13</birthday>
+	</customer>
+</customers>

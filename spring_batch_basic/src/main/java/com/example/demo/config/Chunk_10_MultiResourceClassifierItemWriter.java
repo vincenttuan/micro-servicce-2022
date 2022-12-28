@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
  * 透過 CompositeItemWriter 寫入到多組文件
  * 透過 ClassifierCompositeItemWriter 分類並寫入到多組文件
  * */
-@Configuration
+//@Configuration
 public class Chunk_10_MultiResourceClassifierItemWriter {
 	@Autowired
 	private JobBuilderFactory jobBuilderFactory;

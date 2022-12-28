@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SpringBatch 任務調度</title>
+</head>
+<body>
+	<h1>SpringBatch 任務調度</h1>
+	<ol>
+		<li>預設參數應該要每次輸入不一樣，否則會錯誤</li>
+		<li>要注意的是：同樣的參數，同樣的任務再次運行的時候將拋出
+			JobInstanceAlreadyCompleteException 異常</li>
+		<li>所以我們在任務調度的時候，應避免參數重複。</li>
+		<li>參數會被記錄在 BATCH_JOB_EXECUTION_PARAMS 資料表中</li>
+		<li>小技巧：若要在相同的參數下能重跑任務，假設參數是 vin 則可以設計成 vin.1、vin.2、vin.3 ...
+			加入序號的方式</li>
+	</ol>
+	<input type="text" id="msg" />
+	<p />
+	<button onclick="runJob1()">Run Job 1</button>
+</body>
+</html>
