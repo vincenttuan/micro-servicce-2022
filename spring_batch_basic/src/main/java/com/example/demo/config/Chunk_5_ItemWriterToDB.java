@@ -39,7 +39,6 @@ public class Chunk_5_ItemWriterToDB {
 		return jobBuilderFactory.get("ItemWriterDBJob")
 				.start(itemWriterDBStep())
 				.build();
-		
 	}
 	
 	@Bean
