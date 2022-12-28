@@ -12,11 +12,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /*
- * 讀取 mysql customer 資料表中的紀錄並寫入到 .txt、.csv 文件中
+ * 讀取 mysql customer 資料表中的紀錄並寫入到 .json 文件中
  * 利用 FlatFileItemWriter 輸出文件
  * */
-//@Configuration
-public class Chunk_6_ReadFromDB_WriteToFlatFile {
+@Configuration
+public class Chunk_7_ReadFromDB_WriteToJsonFile {
 	
 	@Autowired
 	private JobBuilderFactory jobBuilderFactory;
@@ -29,22 +29,22 @@ public class Chunk_6_ReadFromDB_WriteToFlatFile {
 	private JdbcPagingItemReader<Customer> jdbcCustomerReader;
 	
 	@Autowired
-	@Qualifier("flatFileCustomerWriter")
-	private FlatFileItemWriter<Customer> flatFileCustomerWriter;
+	@Qualifier("jsonFileCustomerWriter")
+	private FlatFileItemWriter<Customer> jsonFileCustomerWriter;
 	
 	@Bean
-	public Job writeToFlatFileJob() {
-		return jobBuilderFactory.get("WriteToFlatFileJob")
-				.start(writeToFlatFileStep())
+	public Job writeToJsonFileJob() {
+		return jobBuilderFactory.get("WriteToJsonFileJob")
+				.start(writeToJsonFileStep())
 				.build();
 	}
 	
 	@Bean
-	public Step writeToFlatFileStep() {
-		return stepBuilderFactory.get("WriteToFlatFileStep")
+	public Step writeToJsonFileStep() {
+		return stepBuilderFactory.get("WriteToJsonFileStep")
 				.<Customer, Customer>chunk(3)
 				.reader(jdbcCustomerReader)
-				.writer(flatFileCustomerWriter)
+				.writer(jsonFileCustomerWriter)
 				.allowStartIfComplete(true)
 				.build();
 	}
