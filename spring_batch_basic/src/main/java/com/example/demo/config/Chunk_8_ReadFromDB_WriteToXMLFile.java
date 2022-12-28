@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
  * 讀取 mysql customer 資料表中的紀錄並寫入到 .xml 文件中
  * 利用 StaxEventItemWriter 輸出 XML 文件
  * */
-@Configuration
+//@Configuration
 public class Chunk_8_ReadFromDB_WriteToXMLFile {
 	
 	@Autowired

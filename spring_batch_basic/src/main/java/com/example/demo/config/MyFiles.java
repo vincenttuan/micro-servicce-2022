@@ -1,5 +1,6 @@
 package com.example.demo.config;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import org.springframework.batch.item.file.transform.DelimitedLineAggregator;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.batch.item.file.transform.FieldSet;
 import org.springframework.batch.item.file.transform.LineAggregator;
+import org.springframework.batch.item.support.CompositeItemWriter;
 import org.springframework.batch.item.xml.StaxEventItemWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -124,6 +126,15 @@ public class MyFiles {
 		writer.setRootTagName("customers");
 		writer.setMarshaller(marshaller);
 		
+		writer.afterPropertiesSet();
+		return writer;
+	}
+	
+	// 批次寫入多組文件
+	@Bean
+	public CompositeItemWriter<Customer> writeToMultiFiles() throws Exception {
+		CompositeItemWriter<Customer> writer = new CompositeItemWriter<>();
+		writer.setDelegates(Arrays.asList(flatFileCustomerWriter(), jsonFileCustomerWriter(), xmlFileCustomerWriter()));
 		writer.afterPropertiesSet();
 		return writer;
 	}
