@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
+import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.item.database.Order;
 import org.springframework.batch.item.database.support.MySqlPagingQueryProvider;
@@ -39,6 +41,17 @@ public class MyJdbc {
 		// 提交
 		reader.setQueryProvider(provider);
 		return reader;
+	}
+	
+	@Bean
+	public JdbcBatchItemWriter<Customer> jdbcCustomerWriter() {
+		JdbcBatchItemWriter<Customer> writer =  new JdbcBatchItemWriter<>();
+		writer.setDataSource(dataSource);
+		writer.setSql("insert into customer(id, cname, birthday) values(:id, :cname, :birthday)");
+		// 自動值的對應與配置
+		writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<Customer>());
+		System.out.println("jdbcCustomerWriter()...");
+		return writer;
 	}
 	
 }
