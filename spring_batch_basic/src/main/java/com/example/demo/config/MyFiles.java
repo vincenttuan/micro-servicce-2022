@@ -1,13 +1,17 @@
 package com.example.demo.config;
 
 import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
+import org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor;
+import org.springframework.batch.item.file.transform.DelimitedLineAggregator;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.batch.item.file.transform.FieldSet;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 
@@ -41,4 +45,29 @@ public class MyFiles {
 		reader.setLineMapper(mapper);
 		return reader;
 	} 
+
+	// 寫入 csv 檔
+	@Bean
+	public FlatFileItemWriter<Customer> flatFileCustomerWriter() throws Exception {
+		FlatFileItemWriter<Customer> writer = new FlatFileItemWriter<>();
+		String filePath = "/Users/vincenttuan/mico-servicce-2022/spring_batch_basic/src/main/resources/output/customers.csv";
+		writer.setResource(new FileSystemResource(filePath));
+		writer.setAppendAllowed(true);
+		// 將 Customer 物件轉為文字列
+		// Flat file
+		writer.setLineAggregator(new DelimitedLineAggregator<Customer>() {
+			// init
+			{
+				setDelimiter(",");
+				setFieldExtractor(new BeanWrapperFieldExtractor<Customer>() {
+					// init
+					{
+						setNames(new String[] {"id", "cname", "birthday"});
+					}
+				});
+			}
+		});
+		writer.afterPropertiesSet();
+		return writer;
+	}
 }
