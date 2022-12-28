@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
@@ -13,8 +14,10 @@ import org.springframework.batch.item.file.transform.DelimitedLineAggregator;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.batch.item.file.transform.FieldSet;
 import org.springframework.batch.item.file.transform.LineAggregator;
+import org.springframework.batch.item.support.ClassifierCompositeItemWriter;
 import org.springframework.batch.item.support.CompositeItemWriter;
 import org.springframework.batch.item.xml.StaxEventItemWriter;
+import org.springframework.classify.Classifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -136,6 +139,28 @@ public class MyFiles {
 		CompositeItemWriter<Customer> writer = new CompositeItemWriter<>();
 		writer.setDelegates(Arrays.asList(flatFileCustomerWriter(), jsonFileCustomerWriter(), xmlFileCustomerWriter()));
 		writer.afterPropertiesSet();
+		return writer;
+	}
+	
+	// 批次分類寫入多組文件
+	@Bean
+	public ClassifierCompositeItemWriter<Customer> writeToClassifierMultiFiles() throws Exception {
+		ClassifierCompositeItemWriter<Customer> writer = new ClassifierCompositeItemWriter<>();
+		writer.setClassifier(customer -> {
+			try {
+				switch (customer.getId() % 3) {
+					case 0:
+						return flatFileCustomerWriter();
+					case 1:
+						return jsonFileCustomerWriter();	
+					case 2:
+						return xmlFileCustomerWriter();	
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		});
 		return writer;
 	}
 	
