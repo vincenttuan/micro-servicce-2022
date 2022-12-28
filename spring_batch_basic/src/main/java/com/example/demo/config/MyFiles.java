@@ -5,6 +5,7 @@ import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.batch.item.file.transform.FieldSet;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,8 @@ import org.springframework.validation.BindException;
 @Configuration // 確保系統再啟動時就會先行配置
 public class MyFiles {
 	
+	// 讀取 input/customers.txt 檔案資料
+	@Bean
 	public FlatFileItemReader<Customer> fileCustomerReader() {
 		FlatFileItemReader<Customer> reader = new FlatFileItemReader<>();
 		reader.setResource(new ClassPathResource("input/customers.txt"));

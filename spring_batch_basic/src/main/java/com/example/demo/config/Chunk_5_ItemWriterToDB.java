@@ -1,5 +1,10 @@
 package com.example.demo.config;
 
+import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 
 /*
@@ -10,5 +15,15 @@ import org.springframework.context.annotation.Configuration;
  * */
 @Configuration
 public class Chunk_5_ItemWriterToDB {
+	
+	@Autowired
+	private JobBuilderFactory jobBuilderFactory;
+	
+	@Autowired
+	private StepBuilderFactory  stepBuilderFactory;
+	
+	@Autowired
+	@Qualifier("fileCustomerReader")
+	private FlatFileItemReader<Customer> fileCustomerReader;
 	
 }
