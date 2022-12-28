@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
  * 匯入到 mysql customer 資料表中
  * 要先建立 customer 資料表
  * */
-@Configuration
+//@Configuration
 public class Chunk_5_ItemWriterToDB {
 	
 	@Autowired

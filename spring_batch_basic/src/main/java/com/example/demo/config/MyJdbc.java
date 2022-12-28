@@ -44,6 +44,28 @@ public class MyJdbc {
 		return reader;
 	}
 	
+	// 批次讀取 customer 資料表中的紀錄
+	@Bean
+	@StepScope
+	private JdbcPagingItemReader<Customer> jdbcCustomerReader() {
+		JdbcPagingItemReader<Customer> reader = new JdbcPagingItemReader<>();
+		reader.setDataSource(dataSource);
+		reader.setFetchSize(2); // 每次讀取 2 筆
+		// ORM
+		reader.setRowMapper(new BeanPropertyRowMapper<>(Customer.class));
+		// 指定 MySQL 配置
+		MySqlPagingQueryProvider provider = new MySqlPagingQueryProvider();
+		provider.setSelectClause("id, cname, birthday");
+		provider.setFromClause("from customer");
+		// 排序
+		Map<String, Order> sort = new HashMap<>();
+		sort.put("id", Order.ASCENDING);
+		provider.setSortKeys(sort);
+		// 提交
+		reader.setQueryProvider(provider);
+		return reader;
+	}
+	
 	// 批次寫入到 customer 資料表中
 	@Bean
 	@StepScope
