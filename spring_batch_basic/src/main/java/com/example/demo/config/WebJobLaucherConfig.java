@@ -53,7 +53,7 @@ public class WebJobLaucherConfig implements StepExecutionListener {
 	@Override
 	public void beforeStep(StepExecution stepExecution) {
 		System.out.println("獲取參數");
-		param =  stepExecution.getJobParameters().getParameters();
+		param = stepExecution.getJobParameters().getParameters();
 	}
 
 	@Override
