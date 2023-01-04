@@ -14,9 +14,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.demo.service.RemoteCallService;
+
 @RestController
 public class ApiCotroller {
 	
+	@Autowired
+	private RemoteCallService remoteCallService;
+	
+	@GetMapping("/employee")
+	public String getEmployee() {
+		String employee = remoteCallService.employee();
+		System.out.println(employee);
+		return employee;
+	}
+	
+	/*
 	@Autowired
 	private DiscoveryClient discoveryClient;
 	
@@ -40,5 +53,6 @@ public class ApiCotroller {
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 		return  new HttpEntity<>(headers);
 	}
+	*/
 	
 }
