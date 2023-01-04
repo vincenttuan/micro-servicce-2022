@@ -24,7 +24,10 @@ public class ApiCotroller {
 	public String getEmployee() {
 		List<ServiceInstance> instances = discoveryClient.getInstances("EMPLOYEE-PRODUCER");
 		ServiceInstance serviceInstance = instances.get(0);
-		String fullURL = serviceInstance.getUri().toString();
+		String baseURL = serviceInstance.getUri().toString();
+		String fullURL = baseURL + "/employee";
+		System.out.println("baseURL = " + baseURL);
+		System.out.println("fullURL = " + fullURL);
 		
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = null;
