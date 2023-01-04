@@ -1,5 +1,10 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -12,11 +17,14 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class ApiCotroller {
 	
+	@Autowired
+	private DiscoveryClient discoveryClient;
+	
 	@GetMapping("/employee")
 	public String getEmployee() {
-		String baseURL = "http://localhost:8001";
-		String servicePath = "/employee";
-		String fullURL = baseURL + servicePath;
+		List<ServiceInstance> instances = discoveryClient.getInstances("EMPLOYEE-PRODUCER");
+		ServiceInstance serviceInstance = instances.get(0);
+		String fullURL = serviceInstance.getUri().toString();
 		
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = null;
