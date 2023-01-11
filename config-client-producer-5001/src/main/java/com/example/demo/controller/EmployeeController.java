@@ -11,15 +11,18 @@ import com.example.demo.model.Employee;
 @RestController
 public class EmployeeController {
 	
-	@Value("${message: None}")
+	@Value("${message: None}") // 透過公有配置資訊取得
 	private String message;
+	
+	@Value("${message_secure: None}") // 透過專屬（私有）配置資訊取得
+	private String secureMessage;
 	
 	@GetMapping("/employee")
 	public Employee employee() {
 		Employee emp = new Employee();
 		emp.setEmpId("1");
 		emp.setName("John");
-		emp.setDescription("message: " + message);
+		emp.setDescription("message: " + message + ", secureMessage: " + secureMessage);
 		emp.setSalary(80000);
 		return emp;
 	}
