@@ -14,6 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+/*
+ * 直連 producer:  http://192.168.30.252:6062/employee
+ * 透過 zuul-service: http://192.168.30.252:6070/producer/employee
+ * 透過 consumer: http://192.168.30.252:6061/employee
+ *               路徑：consumer -> zuul-service -> producer
+ * */
+
 @RestController
 public class ApiController {
 	
