@@ -8,7 +8,7 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableAutoConfiguration
+//@EnableAutoConfiguration
 @EnableZuulProxy
 public class ZuulService6070Application {
 
