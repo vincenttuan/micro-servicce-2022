@@ -29,7 +29,7 @@ public class EmployeeController {
 		return emp;
 	}
 	
-	public Employee getDataFallback() {
+	public Employee getDataFallback(HttpServletRequest request, String id) {
 		System.out.println("呼叫 getDataFallback() 方法");
 		
 		Employee emp = new Employee();
