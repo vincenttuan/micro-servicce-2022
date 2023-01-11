@@ -7,7 +7,7 @@ import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component // 是否要啟用客製化心跳
 public class CustomHealthIndicator implements HealthIndicator {
 
 	@Override
