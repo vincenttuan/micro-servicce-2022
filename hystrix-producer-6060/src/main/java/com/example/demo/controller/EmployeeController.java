@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Employee;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @RestController
 public class EmployeeController {
 	
 	@GetMapping("/employee/{id}")
+	@HystrixCommand(fallbackMethod = "getDataFallback")
 	public Employee employee(HttpServletRequest request, @PathVariable("id") String id) {
 		System.out.println("呼叫 employee() 方法");
 		
@@ -24,6 +26,17 @@ public class EmployeeController {
 		emp.setName("John");
 		emp.setDescription("Manager, port:" + request.getLocalPort());
 		emp.setSalary(80000);
+		return emp;
+	}
+	
+	public Employee getDataFallback() {
+		System.out.println("呼叫 getDataFallback() 方法");
+		
+		Employee emp = new Employee();
+		emp.setEmpId("fallback-1");
+		emp.setName("fallback-emp");
+		emp.setDescription("fallback employee error");
+		emp.setSalary(0);
 		return emp;
 	}
 	
