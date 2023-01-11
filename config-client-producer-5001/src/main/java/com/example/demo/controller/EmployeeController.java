@@ -14,7 +14,7 @@ public class EmployeeController {
 	@Value("${message: None}") // 透過公有配置資訊取得
 	private String message;
 	
-	@Value("${message_secure: None}") // 透過專屬（私有）配置資訊取得
+	@Value("${secure_message: None}") // 透過專屬（私有）配置資訊取得
 	private String secureMessage;
 	
 	@GetMapping("/employee")
