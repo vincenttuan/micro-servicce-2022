@@ -35,3 +35,5 @@ spring:
       schema-locations: classpath:/org/springframework/batch/core/schema-mysql.sql
 
 </pre>
+https://www.javainuse.com/spring/cloud-gateway-eureka
+
