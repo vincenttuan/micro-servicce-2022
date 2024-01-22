@@ -37,3 +37,6 @@ spring:
 </pre>
 https://www.javainuse.com/spring/cloud-gateway-eureka
 
+2023-24 商研院學生專題
+https://github.com/Erikawu16/MyWebBank
+
